@@ -5,6 +5,7 @@ import schema from "./schema.json";
 import uiSchema from "./uiSchema.json";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { SetDarkTheme } from "./SetDark";
 
 function App() {
     const [formData, setFormData] = useState({});
@@ -31,20 +32,8 @@ function App() {
             >
                 Load Data
             </Button>
-            <Button
-                variant="outlined"
-                onClick={() => {
-                    setFormData({
-                        accounts: [
-                            {
-                                website: "hi",
-                            },
-                        ],
-                    });
-                }}
-            >
-                Export
-            </Button>
+            <Button variant="outlined">Export</Button>
+            <SetDarkTheme />
             <Form
                 formData={formData}
                 schema={schema}
