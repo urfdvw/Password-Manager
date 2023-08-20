@@ -4,7 +4,11 @@
             "type": "object",
             "title": "",
             "properties": {
-                "user": {
+                "website": {
+                    "title": "Web Site",
+                    "type": "string"
+                },
+                "username": {
                     "title": "User Name",
                     "type": "string"
                 },
@@ -21,22 +25,16 @@
                     "type": "string"
                 }
             },
-            "required": ["user"]
+            "required": ["website"]
         }
     },
     "type": "object",
     "properties": {
         "accounts": {
             "title": "Accounts",
-            "type": "object",
-            "properties": {
-                "children": {
-                    "title": "",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/account"
-                    }
-                }
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/account"
             }
         }
     }
