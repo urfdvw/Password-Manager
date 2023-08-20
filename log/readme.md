@@ -7,4 +7,4 @@
     - ref: https://rjsf-team.github.io/react-jsonschema-form/docs/
     - dependency: `npm install tslib`
     - theme dependency: `npm install @rjsf/mui`
-    
+- `npm install @mui/material @emotion/react @emotion/styled`

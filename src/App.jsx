@@ -3,6 +3,8 @@ import Form from "@rjsf/mui";
 import validator from "@rjsf/validator-ajv8";
 import schema from "./schema.json";
 import uiSchema from "./uiSchema.json";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 function App() {
     const [formData, setFormData] = useState({});
@@ -12,7 +14,11 @@ function App() {
     };
     return (
         <>
-            <button
+            <Typography variant="h1" gutterBottom>
+                Password Manager
+            </Typography>
+            <Button
+                variant="outlined"
                 onClick={() => {
                     setFormData({
                         accounts: [
@@ -23,8 +29,22 @@ function App() {
                     });
                 }}
             >
-                change data
-            </button>
+                Load Data
+            </Button>
+            <Button
+                variant="outlined"
+                onClick={() => {
+                    setFormData({
+                        accounts: [
+                            {
+                                website: "hi",
+                            },
+                        ],
+                    });
+                }}
+            >
+                Export
+            </Button>
             <Form
                 formData={formData}
                 schema={schema}
