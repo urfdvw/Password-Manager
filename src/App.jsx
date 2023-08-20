@@ -5,7 +5,7 @@ import schema from "./schema.json";
 import uiSchema from "./uiSchema.json";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { SetDarkTheme } from "./SetDark";
+import { SetDarkTheme } from "./SetDarkTheme";
 
 function App() {
     const [formData, setFormData] = useState({});

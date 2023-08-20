@@ -8,3 +8,4 @@
     - dependency: `npm install tslib`
     - theme dependency: `npm install @rjsf/mui`
 - `npm install @mui/material @emotion/react @emotion/styled`
+- `SetDarkTheme` can be reused in other projects
