@@ -6,4 +6,5 @@
 - `npm install @rjsf/core @rjsf/utils @rjsf/validator-ajv8 --save`
     - ref: https://rjsf-team.github.io/react-jsonschema-form/docs/
     - dependency: `npm install tslib`
+    - theme dependency: `npm install @rjsf/mui`
     

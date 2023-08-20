@@ -1,16 +1,8 @@
 import { useState } from "react";
-import Form from "@rjsf/core";
+import Form from "@rjsf/mui";
 import validator from "@rjsf/validator-ajv8";
-
-const schema = {
-    title: "Todo",
-    type: "object",
-    required: ["title"],
-    properties: {
-        title: { type: "string", title: "Title", default: "A new task" },
-        done: { type: "boolean", title: "Done?", default: false },
-    },
-};
+import schema from "./schema.json";
+import uiSchema from "./uiSchema.json";
 
 function App() {
     const handleSubmit = (e) => {
@@ -20,6 +12,7 @@ function App() {
         <>
             <Form
                 schema={schema}
+                uiSchema={uiSchema}
                 validator={validator}
                 onSubmit={handleSubmit}
             />

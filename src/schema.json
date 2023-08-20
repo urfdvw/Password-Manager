@@ -1,0 +1,43 @@
+{
+    "definitions": {
+        "account": {
+            "type": "object",
+            "title": "",
+            "properties": {
+                "user": {
+                    "title": "User Name",
+                    "type": "string"
+                },
+                "password": {
+                    "title": "Password",
+                    "type": "string"
+                },
+                "link": {
+                    "title": "Web Link",
+                    "type": "string"
+                },
+                "note": {
+                    "title": "Note & Hint",
+                    "type": "string"
+                }
+            },
+            "required": ["user"]
+        }
+    },
+    "type": "object",
+    "properties": {
+        "accounts": {
+            "title": "Accounts",
+            "type": "object",
+            "properties": {
+                "children": {
+                    "title": "",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/account"
+                    }
+                }
+            }
+        }
+    }
+}
