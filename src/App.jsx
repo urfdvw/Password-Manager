@@ -6,12 +6,13 @@ import uiSchema from "./uiSchema.json";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 import { SetDarkTheme } from "./SetDarkTheme";
 import { useFileHandle, download } from "./useFileHandle";
 
 function App() {
     const [formData, setFormData] = useState({});
-    const { openFile, writeFile } = useFileHandle();
+    const { openFile, writeFile, fileHandleReady } = useFileHandle();
     const [masterKey, setMasterKey] = useState("");
 
     const handleLoad = async () => {
@@ -32,35 +33,61 @@ function App() {
 
     return (
         <>
-            <Typography variant="h1" gutterBottom>
-                Password Manager
-            </Typography>
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    p: 1,
+                    m: 1,
+                    bgcolor: "background.paper",
+                    borderRadius: 1,
+                }}
+            >
+                <Typography variant="h3" component="h1" gutterBottom>
+                    Password Manager
+                </Typography>
+                <SetDarkTheme />
+            </Box>
             <TextField
                 id="standard-basic"
                 label="Master Key"
-                variant="filled"
+                // variant="filled"
+                type="password"
                 size="small"
                 value={masterKey}
                 onChange={(e) => {
                     setMasterKey(e.target.value);
                 }}
             />
-            <br />
-            <Button variant="outlined" onClick={handleLoad}>
-                Load Data
-            </Button>
-            <Button variant="outlined" onClick={handleExport}>
-                Export
-            </Button>
-            <SetDarkTheme />
-            <Form
-                formData={formData}
-                schema={schema}
-                uiSchema={uiSchema}
-                validator={validator}
-                onSubmit={handleSubmit}
-                omitExtraData={true}
-            />
+            {masterKey ? (
+                fileHandleReady ? (
+                    <>
+                        <Button
+                            variant="outlined"
+                            onClick={handleExport}
+                            size="large"
+                        >
+                            Export
+                        </Button>
+                        <Form
+                            formData={formData}
+                            schema={schema}
+                            uiSchema={uiSchema}
+                            validator={validator}
+                            onSubmit={handleSubmit}
+                            omitExtraData={true}
+                        />
+                    </>
+                ) : (
+                    <Button
+                        variant="outlined"
+                        onClick={handleLoad}
+                        size="large"
+                    >
+                        Load Data
+                    </Button>
+                )
+            ) : null}
         </>
     );
 }

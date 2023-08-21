@@ -1,6 +1,7 @@
 import { useState } from "react";
 export const useFileHandle = () => {
     const [fileHandle, setFileHandle] = useState();
+    const [fileHandleReady, setFileHandleReady] = useState(false);
 
     const openFile = async () => {
         let fileHandle;
@@ -8,6 +9,7 @@ export const useFileHandle = () => {
         setFileHandle(fileHandle);
         const file = await fileHandle.getFile();
         const contents = await file.text();
+        setFileHandleReady(true);
         return contents;
     };
 
@@ -21,7 +23,7 @@ export const useFileHandle = () => {
         await writable.close();
     };
 
-    return { openFile, writeFile };
+    return { openFile, writeFile, fileHandleReady };
 };
 
 export function download(data, filename, type) {
