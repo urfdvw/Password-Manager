@@ -23,6 +23,11 @@
                 "note": {
                     "title": "Note & Hint",
                     "type": "string"
+                },
+                "hide": {
+                    "title": "Hide in password manager",
+                    "type": "boolean",
+                    "default": false
                 }
             },
             "required": ["website"]
