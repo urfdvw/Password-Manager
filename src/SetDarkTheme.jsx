@@ -42,7 +42,6 @@ export const SetDarkTheme = () => {
             variant="contained"
             onClick={() => {
                 const CurIsDark = !isDark;
-                console.log(CurIsDark);
                 setIsDark(CurIsDark);
                 setTheme(CurIsDark);
             }}
