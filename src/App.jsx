@@ -5,12 +5,12 @@ import schema from "./schema.json";
 import uiSchema from "./uiSchema.json";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { SetDarkTheme } from "./SetDarkTheme";
 import { useFileHandle } from "./useFileHandle";
 import { encode, decode } from "./cypherUtils";
 import { HelpInfo } from "./HelpInfo";
+import { PassWord } from "./PassWord";
 
 function App() {
     const [formData, setFormData] = useState({});
@@ -47,16 +47,13 @@ function App() {
                 </Typography>
                 <SetDarkTheme />
             </Box>
-            <TextField
-                id="standard-basic"
+            <PassWord
+                masterKey={masterKey}
+                setMasterKey={setMasterKey}
                 label="Master Key"
-                type="password"
-                size="small"
-                value={masterKey}
-                onChange={(e) => {
-                    setMasterKey(e.target.value);
-                }}
             />
+            <br />
+            <br />
             {masterKey ? (
                 fileHandleReady ? (
                     <Form
