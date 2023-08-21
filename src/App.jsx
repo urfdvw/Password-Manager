@@ -8,7 +8,8 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { SetDarkTheme } from "./SetDarkTheme";
-import { useFileHandle, download } from "./useFileHandle";
+import { useFileHandle } from "./useFileHandle";
+import { encode, decode } from "./cypherUtils";
 
 function App() {
     const [formData, setFormData] = useState({});
@@ -17,17 +18,14 @@ function App() {
 
     const handleLoad = async () => {
         const fileContents = await openFile();
-        setFormData(JSON.parse(fileContents));
-    };
-    const handleExport = async () => {
-        download(JSON.stringify(formData), "data.json", "text");
+        var encoded = encode(JSON.parse(fileContents), masterKey);
+        setFormData(encoded);
     };
     const handleSubmit = async (e) => {
         if (confirm("Save data")) {
             const curFormData = e.formData;
-            console.log(curFormData);
             setFormData(curFormData);
-            await writeFile(JSON.stringify(curFormData));
+            await writeFile(JSON.stringify(decode(curFormData, masterKey)));
         }
     };
 
@@ -61,23 +59,14 @@ function App() {
             />
             {masterKey ? (
                 fileHandleReady ? (
-                    <>
-                        <Button
-                            variant="outlined"
-                            onClick={handleExport}
-                            size="large"
-                        >
-                            Export
-                        </Button>
-                        <Form
-                            formData={formData}
-                            schema={schema}
-                            uiSchema={uiSchema}
-                            validator={validator}
-                            onSubmit={handleSubmit}
-                            omitExtraData={true}
-                        />
-                    </>
+                    <Form
+                        formData={formData}
+                        schema={schema}
+                        uiSchema={uiSchema}
+                        validator={validator}
+                        onSubmit={handleSubmit}
+                        omitExtraData={true}
+                    />
                 ) : (
                     <Button
                         variant="outlined"

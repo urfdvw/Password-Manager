@@ -11,3 +11,6 @@
 - `SetDarkTheme` can be reused in other projects
 - use single file handle instead of dir handle
 - build to /docs and deploy gh-page to it
+- conditionally show components when needed
+- remove export function, as cofusing
+    - start from a empty text file.
