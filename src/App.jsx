@@ -8,9 +8,9 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { SetDarkTheme } from "./SetDarkTheme";
-import { useFileHandle, download } from "./useFileHandle";
+import { useFileHandle } from "./useFileHandle";
 import { encode, decode } from "./cypherUtils";
-import sampleData from "./sample.json";
+import { HelpInfo } from "./HelpInfo";
 
 function App() {
     const [formData, setFormData] = useState({});
@@ -28,9 +28,6 @@ function App() {
             setFormData(curFormData);
             await writeFile(JSON.stringify(decode(curFormData, masterKey)));
         }
-    };
-    const handleDownloadSample = () => {
-        download(JSON.stringify(sampleData), "data.json", "text");
     };
 
     return (
@@ -53,7 +50,6 @@ function App() {
             <TextField
                 id="standard-basic"
                 label="Master Key"
-                // variant="filled"
                 type="password"
                 size="small"
                 value={masterKey}
@@ -81,13 +77,7 @@ function App() {
                     </Button>
                 )
             ) : (
-                <Button
-                    variant="outlined"
-                    onClick={handleDownloadSample}
-                    size="large"
-                >
-                    Download Sample Data File
-                </Button>
+                <HelpInfo />
             )}
         </>
     );
