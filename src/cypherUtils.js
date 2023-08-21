@@ -31,11 +31,11 @@ function vigenere(plain, key, dir) {
 }
 
 function encode(obj, key) {
-    return code(obj, key, -1);
+    return code(obj, key, 1);
 }
 
 function decode(obj, key) {
-    return code(obj, key, 1);
+    return code(obj, key, -1);
 }
 
 function code(obj, key, dir) {
