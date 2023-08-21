@@ -20,10 +20,12 @@ function App() {
         download(JSON.stringify(formData), "data.json", "text");
     };
     const handleSubmit = async (e) => {
-        const curFormData = e.formData;
-        console.log(curFormData);
-        setFormData(curFormData);
-        await writeFile(JSON.stringify(curFormData));
+        if (confirm("Save data")) {
+            const curFormData = e.formData;
+            console.log(curFormData);
+            setFormData(curFormData);
+            await writeFile(JSON.stringify(curFormData));
+        }
     };
 
     return (
