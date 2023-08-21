@@ -12,7 +12,7 @@ export const useFileHandle = () => {
     };
 
     const writeFile = async (contents) => {
-        console.log('fileHandle', fileHandle)
+        console.log("fileHandle", fileHandle);
         // Create a FileSystemWritableFileStream to write to.
         const writable = await fileHandle.createWritable();
         // Write the contents of the file to the stream.
@@ -26,11 +26,13 @@ export const useFileHandle = () => {
 
 export function download(data, filename, type) {
     // Function to download data to a file
-    console.log(data)
+    console.log(data);
     var file = new Blob([data], { type: type });
-    if (window.navigator.msSaveOrOpenBlob) // IE10+
+    if (window.navigator.msSaveOrOpenBlob)
+        // IE10+
         window.navigator.msSaveOrOpenBlob(file, filename);
-    else { // Others
+    else {
+        // Others
         var a = document.createElement("a"),
             url = URL.createObjectURL(file);
         a.href = url;

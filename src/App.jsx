@@ -5,12 +5,14 @@ import schema from "./schema.json";
 import uiSchema from "./uiSchema.json";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 import { SetDarkTheme } from "./SetDarkTheme";
 import { useFileHandle, download } from "./useFileHandle";
 
 function App() {
     const [formData, setFormData] = useState({});
     const { openFile, writeFile } = useFileHandle();
+    const [masterKey, setMasterKey] = useState("");
 
     const handleLoad = async () => {
         const fileContents = await openFile();
@@ -33,6 +35,17 @@ function App() {
             <Typography variant="h1" gutterBottom>
                 Password Manager
             </Typography>
+            <TextField
+                id="standard-basic"
+                label="Master Key"
+                variant="filled"
+                size="small"
+                value={masterKey}
+                onChange={(e) => {
+                    setMasterKey(e.target.value);
+                }}
+            />
+            <br />
             <Button variant="outlined" onClick={handleLoad}>
                 Load Data
             </Button>
