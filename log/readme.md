@@ -9,3 +9,5 @@
     - theme dependency: `npm install @rjsf/mui`
 - `npm install @mui/material @emotion/react @emotion/styled`
 - `SetDarkTheme` can be reused in other projects
+- use single file handle instead of dir handle
+- build to /docs and deploy gh-page to it
