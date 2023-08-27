@@ -24,6 +24,11 @@
                     "title": "Note & Hint",
                     "type": "string"
                 },
+                "group": {
+                    "title": "Group",
+                    "enum": ["Work", "Insurance", "Bill", "Living", "Hobby", "Other"],
+                    "default": "Other"
+                },
                 "hide": {
                     "title": "Hide in password manager",
                     "type": "boolean",

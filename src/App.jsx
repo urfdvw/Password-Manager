@@ -12,6 +12,14 @@ import { encode, decode } from "./cypherUtils";
 import { HelpInfo } from "./HelpInfo";
 import { PassWord } from "./PassWord";
 
+function sortByGroup(curFormData) {
+    let out = [];
+    for (const group of schema.definitions.account.properties.group.enum) {
+        out = [...out, ...curFormData.accounts.filter((row) => row.group === group)];
+    }
+    return { accounts: out };
+}
+
 function App() {
     const [formData, setFormData] = useState({});
     const { openFile, writeFile, fileHandleReady } = useFileHandle();
@@ -24,7 +32,7 @@ function App() {
     };
     const handleSubmit = async (e) => {
         if (confirm("Save data")) {
-            const curFormData = e.formData;
+            const curFormData = sortByGroup(e.formData);
             setFormData(curFormData);
             await writeFile(JSON.stringify(decode(curFormData, masterKey)));
         }
