@@ -11,11 +11,18 @@ import { useFileHandle } from "./useFileHandle";
 import { encode, decode } from "./cypherUtils";
 import { HelpInfo } from "./HelpInfo";
 import { PassWord } from "./PassWord";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import { TabPanel, a11yProps } from "./TabPanel";
+import Tooltip from "@mui/material/Tooltip";
 
 function sortByGroup(curFormData) {
     let out = [];
     for (const group of schema.definitions.account.properties.group.enum) {
-        out = [...out, ...curFormData.accounts.filter((row) => row.group === group)];
+        out = [
+            ...out,
+            ...curFormData.accounts.filter((row) => row.group === group),
+        ];
     }
     return { accounts: out };
 }
@@ -24,6 +31,7 @@ function App() {
     const [formData, setFormData] = useState({});
     const { openFile, writeFile, fileHandleReady } = useFileHandle();
     const [masterKey, setMasterKey] = useState("");
+    const [tabValue, setTabValue] = useState(0);
 
     const handleLoad = async () => {
         const fileContents = await openFile();
@@ -36,6 +44,9 @@ function App() {
             setFormData(curFormData);
             await writeFile(JSON.stringify(decode(curFormData, masterKey)));
         }
+    };
+    const handleChange = (e) => {
+        setFormData(e.formData);
     };
 
     return (
@@ -64,14 +75,102 @@ function App() {
             <br />
             {masterKey ? (
                 fileHandleReady ? (
-                    <Form
-                        formData={formData}
-                        schema={schema}
-                        uiSchema={uiSchema}
-                        validator={validator}
-                        onSubmit={handleSubmit}
-                        omitExtraData={true}
-                    />
+                    <Box sx={{ flexGrow: 1 }}>
+                        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                            <Tabs
+                                value={tabValue}
+                                onChange={(event, newValue) => {
+                                    setTabValue(newValue);
+                                }}
+                                aria-label="basic tabs example"
+                            >
+                                <Tab label="View" {...a11yProps(0)} />
+                                <Tab label="Edit" {...a11yProps(1)} />
+                            </Tabs>
+                        </Box>
+                        <TabPanel value={tabValue} index={0}>
+                            {schema.definitions.account.properties.group.enum.map(
+                                (group) => {
+                                    return (
+                                        <>
+                                            {formData.accounts.filter(
+                                                (row) => row.group === group
+                                            ).length > 0 ? (
+                                                <p>{group}</p>
+                                            ) : null}
+                                            {formData.accounts
+                                                .filter(
+                                                    (row) => row.group === group
+                                                )
+                                                .map((row) => {
+                                                    return (
+                                                        <>
+                                                            <p>
+                                                                <Tooltip
+                                                                    title={
+                                                                        row.note
+                                                                    }
+                                                                >
+                                                                    <Button
+                                                                        variant="contained"
+                                                                        onClick={() => {
+                                                                            if (
+                                                                                !row.link
+                                                                            ) {
+                                                                                return;
+                                                                            }
+                                                                            window.open(
+                                                                                row.link,
+                                                                                "_blank" // <- This is what makes it open in a new window.
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        {
+                                                                            row.website
+                                                                        }
+                                                                    </Button>
+                                                                </Tooltip>
+                                                                <Button
+                                                                    variant="outlined"
+                                                                    onClick={() => {
+                                                                        navigator.clipboard.writeText(
+                                                                            row.username
+                                                                        );
+                                                                    }}
+                                                                >
+                                                                    User Name
+                                                                </Button>
+                                                                <Button
+                                                                    variant="outlined"
+                                                                    onClick={() => {
+                                                                        navigator.clipboard.writeText(
+                                                                            row.password
+                                                                        );
+                                                                    }}
+                                                                >
+                                                                    Password
+                                                                </Button>
+                                                            </p>
+                                                        </>
+                                                    );
+                                                })}
+                                        </>
+                                    );
+                                }
+                            )}
+                        </TabPanel>
+                        <TabPanel value={tabValue} index={1}>
+                            <Form
+                                formData={formData}
+                                schema={schema}
+                                uiSchema={uiSchema}
+                                validator={validator}
+                                onSubmit={handleSubmit}
+                                omitExtraData={true}
+                                onChange={handleChange}
+                            />
+                        </TabPanel>
+                    </Box>
                 ) : (
                     <Button
                         variant="outlined"
